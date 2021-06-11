@@ -1,0 +1,14 @@
+After changing the settings.py I ran python manage.py migrate, I got into an error saying no module named psycopg2, so these are the commands for that
+
+sudo apt-get update
+sudo apt-get install libpq-dev python-dev
+sudo pip install psycopg2
+
+What are the requirements?
+1: Interview creation page for admin, selection of participants and start and end time.
+	- If any of the selected participants has another interview already scheduled at the moment.
+	- If the number of available participants is less than 2, it should show an error message.
+
+2: Interview list page where admin can see all the upcoming interviews.
+
+3: Interview edit page

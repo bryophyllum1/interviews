@@ -1,0 +1,20 @@
+{{ interview.title }}
+<hr>
+From {{ interview.start_datetime }} to {{ interview.end_datetime }}
+<hr>
+
+<h2>Interviewers:</h2>
+<ul>
+{% for interviewer in interview.interviewer.all %}
+    <li><a href="interviewer/{{ interviewer.pk }}">{{ interviewer.name }}, {{ interviewer.email }}</a></li>
+{% endfor %}
+</ul>
+
+
+<h2>Interviewees:</h2>
+<ul>
+{% for interviewee in interview.interviewee.all %}
+    <li><a href="interviewee/{{ interviewee.pk }}">{{ interviewee.name }}</a></li>
+
+{% endfor %}
+</ul>

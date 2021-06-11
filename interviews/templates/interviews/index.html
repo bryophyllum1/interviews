@@ -1,0 +1,9 @@
+{% if upcoming_interviews %}
+    <ul>
+    {% for interview in upcoming_interviews %}
+        <li><a href="{% url 'interviews:viewInterview' interview.id%}">{{ interview }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No intervies are scheduled.</p>
+{% endif %}
