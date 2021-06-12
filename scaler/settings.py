@@ -25,14 +25,14 @@ SECRET_KEY = 'django-insecure-id)qe)^3q_=&_u=pa)j9$g%$u%wu4f(ik9g)zp)j9k*9%a=om)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.bryophyllum1.pythonanywhere.com']
+ALLOWED_HOSTS = ['bryophyllum1.pythonanywhere.com', ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'email@gmail.com'
-EMAIL_HOST_PASSWORD = '12345'
+EMAIL_HOST_USER = 'interviewbot2021@gmail.com'
+EMAIL_HOST_PASSWORD = 'RandomUser@123'
 
 # Application definition
 

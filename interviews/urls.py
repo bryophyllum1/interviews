@@ -3,6 +3,8 @@ from interviews.views import IndexView, ScheduleInterview, InterviewDetail, Inte
 
 app_name="interviews"
 urlpatterns = [
+    path('', IndexView.as_view(), name="listView2"),
+    path('interview/', IndexView.as_view(), name="listView3"),
     path('list/', IndexView.as_view(), name="listView"),
     path('schedule/', ScheduleInterview.as_view(), name="schedule"),
     path('update/<int:pk>', EditInterviews.as_view(), name='update'),
