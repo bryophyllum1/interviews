@@ -4,7 +4,7 @@
 
 <h2>Interviews</h2>
 <ul>
-{% for interview in interviewee.interview.all %}
-    <li><a href="/interview/{{ interview.pk }}">{{ interview.title }}, from {{ interview.start_datetime }} to {{ interview.end_datetime }}</a></li>
+{% for interview in interviewee.interviewee.all %}
+    <li><a href="{% url 'interviews:viewInterview' interview.id %}">{{ interview.title }}, from {{ interview.start_datetime }} to {{ interview.end_datetime }}</a></li>
 {% endfor %}
 </ul>

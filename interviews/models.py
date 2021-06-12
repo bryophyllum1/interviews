@@ -38,14 +38,3 @@ class Interview(models.Model):
             return f"Interview from {self.start_datetime.strftime('%-I:%M %p')} to {self.end_datetime.strftime('%-I:%M %p')} on {self.start_datetime.strftime('%-d %b, %y')}"
         else:
             return f"Interview from {self.start_datetime.date()} to {self.end_datetime.date()}"
-
-    def is_conflicting(self):
-        allInterviews = Intervew.objects.al()
-        for interview in allInterviews:
-            isdt = interview.start_datetime
-            iedt = interview.end_datetime
-
-            if ((self.start_datetime < isdt and self.end_datetime <= isdt)\
-                    or (self.start_datetime >= iedt and self.end_datetime > iedt)):
-                return True
-            return False

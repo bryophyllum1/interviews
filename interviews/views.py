@@ -61,6 +61,7 @@ class ScheduleInterview(generic.CreateView):
 				if check_clash(ivi, isdt, iedt):
 					raise ValidationError(f"{wer.name} has an interview that clashes with this one")
 		self.object.save()
+		form.save_m2m()
 
 		for wee in wees:
 			subject = f'Hi, {wee.name} your interview is scheduled from {isdt} to {iedt}'
@@ -95,9 +96,11 @@ class EditInterviews(generic.UpdateView):
 					raise ValidationError(f"{wee.name} has an interview that clashes with this one")
 		for wer in wers:
 			iv_list = wer.interviewer.all()
-			if check_clash(ivi, isdt, iedt):
-				raise ValidationError(f"{wer.name} has an interview that clashes with this one")
+			for ivi in iv_list:
+				if check_clash(ivi, isdt, iedt):
+					raise ValidationError(f"{wer.name} has an interview that clashes with this one")
 		self.object.save()
+		form.save_m2m()
 
 		for wee in wees:
 			subject = f'Hi, {wee.name} your interview is scheduled from {isdt} to {iedt}'
