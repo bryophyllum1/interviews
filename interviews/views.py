@@ -76,7 +76,36 @@ class EditInterviews(generic.UpdateView):
 	fields = ['interviewee','interviewer', 'start_datetime', 'end_datetime', 'more_info']
 	def get_success_url(self):
 		return reverse("interviews:listView")
+	def form_valid(self, form):
+		self.object = form.save(commit=False)
+		isdt = form.cleaned_data['start_datetime']
+		iedt = form.cleaned_data['end_datetime']
+		wees = form.cleaned_data['interviewee']
+		wers = form.cleaned_data['interviewer']
+		if isdt <= timezone.now():
+			raise ValidationError("Please select a starting date in the present/future")
+		if (iedt-isdt).total_seconds() < 0:
+			raise ValidationError("Please select an ending date after starting date")
+		if len(wees) < 2:
+			raise ValidationError("There are less than two interviewers. Not done man!")
+		for wee in wees:
+			iv_list = wee.interviewee.all()
+			for ivi in iv_list:
+				if check_clash(ivi, isdt, iedt):
+					raise ValidationError(f"{wee.name} has an interview that clashes with this one")
+		for wer in wers:
+			iv_list = wer.interviewer.all()
+			if check_clash(ivi, isdt, iedt):
+				raise ValidationError(f"{wer.name} has an interview that clashes with this one")
+		self.object.save()
 
+		for wee in wees:
+			subject = f'Hi, {wee.name} your interview is scheduled from {isdt} to {iedt}'
+			message = "Congratulations! Your Interview is scheduled."
+			email_from = settings.EMAIL_HOST_USER
+			recipient_list=[wee.email, ]
+			send_mail( subject, message, email_from, recipient_list )
+		return super(generic.edit.ModelFormMixin, self).form_valid(form)
 
 
 class InterviewDetail(generic.DetailView):
