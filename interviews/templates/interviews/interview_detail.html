@@ -2,11 +2,10 @@
 <hr>
 From {{ interview.start_datetime }} to {{ interview.end_datetime }}
 <hr>
-
 <h2>Interviewers:</h2>
 <ul>
 {% for interviewer in interview.interviewer.all %}
-    <li><a href="interviewer/{{ interviewer.pk }}">{{ interviewer.name }}, {{ interviewer.email }}</a></li>
+    <li><a href="{% url 'interviews:viewInterviewer' interviewer.pk %}">{{ interviewer.name }}, {{ interviewer.email }}</a></li>
 {% endfor %}
 </ul>
 
@@ -14,7 +13,8 @@ From {{ interview.start_datetime }} to {{ interview.end_datetime }}
 <h2>Interviewees:</h2>
 <ul>
 {% for interviewee in interview.interviewee.all %}
-    <li><a href="interviewee/{{ interviewee.pk }}">{{ interviewee.name }}</a></li>
+    <li><a href="{% url 'interviews:viewInterviewee' interviewee.pk %}">{{ interviewee.name }}</a></li>
 
 {% endfor %}
 </ul>
+<a href="{% url 'interviews:update' interview.id%}"><button>Edit/Update</button></a>

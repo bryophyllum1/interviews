@@ -12,12 +12,14 @@ from django.utils import timezone
 
 
 class IndexView(generic.ListView):
-	model = Interview
-	template_name='interviews/index.html'
+	# model = Interview
 	context_object_name='upcoming_interviews'
+	queryset=Interview.objects.filter(start_datetime__gte=timezone.now())
+	template_name='interviews/index.html'
+	
 
-	def get_queryset(self):
-		return Interview.objects.order_by('start_datetime')
+	# def get_queryset(self):
+	# 	return Interview.objects.order_by('start_datetime')
 		# template=loader.get_template('interviews/index.html')
 		# return render(request, 'interviews/index.html', {"upcoming_interviews": upcoming_interviews,})
 
@@ -67,6 +69,14 @@ class ScheduleInterview(generic.CreateView):
 			recipient_list=[wee.email, ]
 			send_mail( subject, message, email_from, recipient_list )
 		return super(generic.edit.ModelFormMixin, self).form_valid(form)
+
+class EditInterviews(generic.UpdateView):
+	model = Interview
+	template_name = "interviews/update.html"
+	fields = ['interviewee','interviewer', 'start_datetime', 'end_datetime', 'more_info']
+	def get_success_url(self):
+		return reverse("interviews:listView")
+
 
 
 class InterviewDetail(generic.DetailView):
