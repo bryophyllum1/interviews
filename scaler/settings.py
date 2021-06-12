@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-id)qe)^3q_=&_u=pa)j9$g%$u%wu4f(ik9g)zp)j9k*9%a=om)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['www.scaler-interviews.herokuapp.com']
 
