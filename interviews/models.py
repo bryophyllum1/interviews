@@ -38,3 +38,9 @@ class Interview(models.Model):
             return f"Interview from {self.start_datetime.strftime('%-I:%M %p')} to {self.end_datetime.strftime('%-I:%M %p')} on {self.start_datetime.strftime('%-d %b, %y')}"
         else:
             return f"Interview from {self.start_datetime.date()} to {self.end_datetime.date()}"
+# interview--
+#     interviewer : (instance of interviewer class)
+#     interviewee : (instance of interviewee class)
+#     start_datetime :
+#     end_datetime
+#     more_info

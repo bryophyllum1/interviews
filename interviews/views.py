@@ -6,6 +6,7 @@ from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.core.mail import send_mail
 from django.utils import timezone
+from django.shortcuts import render
 
 
 
@@ -119,6 +120,19 @@ class InterviewDetail(generic.DetailView):
 	model = Interview
 	template_name = 'interviews/interview_detail.html'
 	context_object_name = 'interview'
+
+def accessView(request, key, email):
+	interview=Interview.objects.get(pk=key)
+	interviewee=interview.interviewee.all()
+	interviewer=interview.interviewer.all()
+	for user in interviewee:
+		if user.email==email:
+			return render(request, "interviews/interview_detail.html", {'interview': interview})
+	for user in interviewer:
+		if user.email==email:
+			return render(request, "interviews/interview_detail.html", {'interview': interview})
+	raise ValidationError("You are not supposed to access this page")
+
 
 class InterviewerDetail(generic.DetailView):
 	model = Interviewer

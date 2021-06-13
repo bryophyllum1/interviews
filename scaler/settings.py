@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-id)qe)^3q_=&_u=pa)j9$g%$u%wu4f(ik9g)zp)j9k*9%a=om)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['bryophyllum1.pythonanywhere.com', ]
+ALLOWED_HOSTS = []
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -84,8 +84,12 @@ WSGI_APPLICATION = 'scaler.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3'
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'scaler',
+        'USER':'postgres',
+        'PASSWORD':'Hello,Aadi',
+        'HOST':'localhost',
+        'PORT':'5432',
     }
 }
 

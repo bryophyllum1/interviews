@@ -1,8 +1,9 @@
 from django.urls import path
-from interviews.views import IndexView, ScheduleInterview, InterviewDetail, InterviewerDetail, IntervieweeDetail, EditInterviews
+from interviews.views import IndexView, ScheduleInterview, InterviewDetail, InterviewerDetail, IntervieweeDetail, EditInterviews, accessView
 
 app_name="interviews"
 urlpatterns = [
+	path('interview/<int:key>/<str:email>/', accessView),
     path('', IndexView.as_view(), name="listView2"),
     path('interview/', IndexView.as_view(), name="listView3"),
     path('list/', IndexView.as_view(), name="listView"),
