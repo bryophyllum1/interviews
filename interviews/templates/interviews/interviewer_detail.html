@@ -5,6 +5,10 @@
 <h2>Interviews</h2>
 <ul>
 {% for interview in interviewer.interviewer.all %}
-    <li><a href="{% url 'interviews:viewInterview' interview.id %}">{{ interview.title }}, from {{ interview.start_datetime }} to {{ interview.end_datetime }}</a></li>
+    <li><a href="{% url 'interviews:viewInterview' interview.id %}">{{ interview.title }}, from {{ interview.start_datetime }} to {{ interview.end_datetime }}</a>
+    	{% if interviewer in interview.interviewee.all %} Interviewee
+    {%else%}
+     Interviewer
+    {%endif%}</li>
 {% endfor %}
 </ul>

@@ -1,8 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Interviewee, Interviewer, Interview
+from .models import Person, Interview
 
-admin.site.register(Interviewee)
-admin.site.register(Interviewer)
+admin.site.register(Person)
 admin.site.register(Interview)

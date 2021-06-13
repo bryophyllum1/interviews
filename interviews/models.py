@@ -14,21 +14,21 @@ class Person(models.Model):
     def __str__(self):
         return self.name
 
-    class Meta:
-        abstract = True
+    # class Meta:
+    #     abstract = True
 
 
-class Interviewer(Person):
-    pass
+# class Interviewer(Person):
+#     pass
 
 
-class Interviewee(Person):
-    pass
+# class Interviewee(Person):
+#     pass
 
 
 class Interview(models.Model):
-    interviewer = models.ManyToManyField(Interviewer, blank=False, related_name='interviewer')
-    interviewee = models.ManyToManyField(Interviewee, blank=False, related_name='interviewee')
+    interviewer = models.ManyToManyField(Person, blank=False, related_name='interviewer')
+    interviewee = models.ManyToManyField(Person, blank=False, related_name='interviewee')
     start_datetime = models.DateTimeField(default=timezone.now, blank=False, null=False)
     end_datetime = models.DateTimeField(default=add_an_hour, blank=False, null=False)
     more_info = models.TextField(blank=True, null=False, default="", max_length=500)

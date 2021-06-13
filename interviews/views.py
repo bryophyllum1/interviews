@@ -1,5 +1,5 @@
 from django.template import loader
-from .models import Person, Interviewer, Interviewee, Interview
+from .models import Person, Interview
 from django.views import generic
 from django.urls import reverse
 from django.core.exceptions import ValidationError
@@ -45,6 +45,12 @@ class ScheduleInterview(generic.CreateView):
 		iedt = form.cleaned_data['end_datetime']
 		wees = form.cleaned_data['interviewee']
 		wers = form.cleaned_data['interviewer']
+
+		for wee in wees:
+			for wer in wers:
+				if wee.name==wer.name:
+					raise ValidationError(f"{wee.name} can not be interviewer as well as interviewee at the same time.")
+
 		if isdt <= timezone.now():
 			raise ValidationError("Please select a starting date in the present/future")
 		if (iedt-isdt).total_seconds() < 0:
@@ -84,6 +90,10 @@ class EditInterviews(generic.UpdateView):
 		iedt = form.cleaned_data['end_datetime']
 		wees = form.cleaned_data['interviewee']
 		wers = form.cleaned_data['interviewer']
+		for wee in wees:
+			for wer in wers:
+				if wee.name==wer.name:
+					raise ValidationError(f"{wee.name} can not be interviewer as well as interviewee at the same time.")
 		if isdt <= timezone.now():
 			raise ValidationError("Please select a starting date in the present/future")
 		if (iedt-isdt).total_seconds() < 0:
@@ -123,25 +133,21 @@ class InterviewDetail(generic.DetailView):
 
 def accessView(request, key, email):
 	interview=Interview.objects.get(pk=key)
-	interviewee=interview.interviewee.all()
-	interviewer=interview.interviewer.all()
-	for user in interviewee:
-		if user.email==email:
-			return render(request, "interviews/interview_detail.html", {'interview': interview})
-	for user in interviewer:
-		if user.email==email:
+	interviewee=interview.interviewee.filter(email__is=email)
+	interviewer=interview.interviewer.filter(email__is=email)
+	if len(interviewee)+len(interviewer)>0:		
 			return render(request, "interviews/interview_detail.html", {'interview': interview})
 	raise ValidationError("You are not supposed to access this page")
 
 
 class InterviewerDetail(generic.DetailView):
-	model = Interviewer
+	model = Person
 	template_name = 'interviews/interviewer_detail.html'
 	context_object_name = 'interviewer'
 
 
 class IntervieweeDetail(generic.DetailView):
-	model = Interviewee
+	model = Person
 	template_name = 'interviews/interviewee_detail.html'
 	context_object_name = 'interviewee'
 
